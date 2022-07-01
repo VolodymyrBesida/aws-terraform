@@ -1,3 +1,16 @@
+# rds postgresql
+  resource "aws_db_instance" "default" {
+  allocated_storage    = 10
+  engine               = "postgres"
+  engine_version       = "13.4"
+  instance_class       = "db.t3.micro"
+  name                 = "demodb"
+  username             = "postgres"
+  password             = "Password1"
+  parameter_group_name = "default.postgres13"
+  skip_final_snapshot  = true
+  publicly_accessible  = true
+  }
 # eb app
   resource "aws_elastic_beanstalk_application" "tf-eb" {
     name        = var.eb-name
@@ -66,17 +79,10 @@
       name      = "SystemType"
       value     = "enhanced"
     }
+    setting {
+      namespace = "aws:elasticbeanstalk:application:environment"
+      name      = "CONNECTION_STRING"
+      value     = "Server=${aws_db_instance.default.endpoint},5432;Database=demodb;User Id=postgres;Password=Password1;"
+    }
   }
 
-# rds postgresql
-  resource "aws_db_instance" "default" {
-  allocated_storage    = 10
-  engine               = "postgres"
-  engine_version       = "13.4"
-  instance_class       = "db.t3.micro"
-  name                 = "demodb"
-  username             = "postgres"
-  password             = "Password1"
-  parameter_group_name = "default.postgres13"
-  skip_final_snapshot  = true
-}
