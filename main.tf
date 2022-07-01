@@ -1,19 +1,41 @@
 # vpc
   resource "aws_vpc" "main" {
-    cidr_block = "10.0.0.0/18"
+    cidr_block = "10.0.0.0/19"
     
     tags = {
       name = "Main VPC"
     }
   }
 
-  # public subnet
-    resource "aws_subnet" "public" {
+  # public subnets
+    resource "aws_subnet" "public-subnet1" {
       vpc_id = aws_vpc.main.id
       cidr_block = "10.0.0.0/24"
 
       tags = {
+        Name = "First PubS"
         name = "Public subnet 1 created with Tf"
+      }
+    }
+
+    resource "aws_subnet" "public-subnet2" {
+      vpc_id = aws_vpc.main.id
+      cidr_block = "10.0.1.0/24"
+
+      tags = {
+        Name = "Second PubS"
+        name = "Public subnet 2 created with Tf"
+      }
+    }
+
+  #private subnet
+    resource "aws_subnet" "private-subnet" {
+      vpc_id = aws_vpc.main.id
+      cidr_block = "10.0.2.0/24"
+
+      tags = {
+        Name = "Main PrS"
+        name = "Private subnet created with Tf"
       }
     }
 
