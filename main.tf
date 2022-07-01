@@ -1,3 +1,23 @@
+# vpc
+  resource "aws_vpc" "main" {
+    cidr_block = "10.0.0.0/18"
+    
+    tags = {
+      name = "Main VPC"
+    }
+  }
+
+  # public subnet
+    resource "aws_subnet" "public" {
+      vpc_id = aws_vpc.main.id
+      cidr_block = "10.0.0.0/24"
+
+      tags = {
+        name = "Public subnet 1 created with Tf"
+      }
+    }
+
+
 # rds postgresql
   resource "aws_db_instance" "default" {
   allocated_storage    = 10
