@@ -1,10 +1,10 @@
 eb-name = "my-geo-app"
 eb-env-name = "my-geo-app-environment"
 eb-env-solution-stack-name = "64bit Amazon Linux 2018.03 v3.4.21 running Tomcat 8.5 Java 8"
-//vpc_id              = "vpc-XXXXXXXXX"
+vpc_id              = "vpc-0ea13259621c91729"//vpc-0ea13259621c91729
 Instance_type       = "t2.small"
 minsize             = 1
 maxsize             = 2
-/*public_subnets     = ["subnet-XXXXXXXXXX", "subnet-XXXXXXXXX"] # Service Subnet
-elb_public_subnets = ["subnet-XXXXXXXXXX", "subnet-XXXXXXXXX"] # ELB Subnet*/
+public_subnets     = ["subnet-0a8337de78c9beeb9","subnet-0ed2f5802b3a31eaf"] # Service Subnet
+elb_public_subnets = ["subnet-0cff71991c9af0856", "subnet-0ed2f5802b3a31eaf"] # ELB Subnet
 tier = "WebServer"

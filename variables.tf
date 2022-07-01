@@ -23,6 +23,6 @@ variable "tier" {
   type = string
 }
  
-//variable "vpc_id" {}
-/*variable "public_subnets" {}
-variable "elb_public_subnets" {}*/
+variable "vpc_id" {}
+variable "public_subnets" {}
+variable "elb_public_subnets" {}
