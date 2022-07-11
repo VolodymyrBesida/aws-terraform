@@ -1,67 +1,19 @@
-resource "aws_elastic_beanstalk_application" "tf-eb" {
-  name        = var.eb-name
-  description = var.eb-describtion
+module "vpc" {
+  source = "./modules/vpc"
 }
 
-resource "aws_elastic_beanstalk_environment" "tf-eb-env" {
-  name                = var.eb-env-name
-  application         = aws_elastic_beanstalk_application.tf-eb.name
-  solution_stack_name = var.eb-env-solution-stack-name
+module "rds" {
+  source = "./modules/rds"
+}
 
-  /*setting {
-    namespace = "aws:ec2:vpc"
-    name      = "VPCId"
-    value     = var.vpc_id
-  }*/
-  setting {
-    namespace = "aws:autoscaling:launchconfiguration"
-    name      = "IamInstanceProfile"
-    value     =  "aws-elasticbeanstalk-ec2-role"
-  }
-  setting {
-    namespace = "aws:ec2:vpc"
-    name      = "AssociatePublicIpAddress"
-    value     =  "True"
-  }
- 
-  /*setting {
-    namespace = "aws:ec2:vpc"
-    name      = "Subnets"
-    value     = join(",", var.public_subnets)
-  }*/
-  setting {
-    namespace = "aws:elasticbeanstalk:environment:process:default"
-    name      = "MatcherHTTPCode"
-    value     = "200"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:environment"
-    name      = "LoadBalancerType"
-    value     = "application"
-  }
-  setting {
-    namespace = "aws:autoscaling:launchconfiguration"
-    name      = "InstanceType"
-    value     = "t2.medium"
-  }
-  setting {
-    namespace = "aws:ec2:vpc"
-    name      = "ELBScheme"
-    value     = "internet facing"
-  }
-  setting {
-    namespace = "aws:autoscaling:asg"
-    name      = "MinSize"
-    value     = 1
-  }
-  setting {
-    namespace = "aws:autoscaling:asg"
-    name      = "MaxSize"
-    value     = 2
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:healthreporting:system"
-    name      = "SystemType"
-    value     = "enhanced"
-  }
+module "eb" {
+  source = "./modules/eb"
+  # network setting
+    main_vpc_id = module.vpc.main_vpc_id
+    loadb_public_subnet1_id = module.vpc.public_subnet1_id
+    loadb_public_subnet2_id = module.vpc.public_subnet2_id
+
+  #database setting
+    db_instance_endpoint = module.rds.db_endpoint
+    db_instance_username = module.rds.db_username_credential
 }

@@ -1,28 +1,17 @@
-variable eb-name {
+variable "eb_address" {
   type = string
-  description = "Name of AWS EB"
+  description = "Default route for my realization of eb"
+  default = "./modules/eb"
 }
 
-variable eb-describtion {
+variable "rds_address" {
   type = string
-  description = "Description value of 'description section' in EB"
-  default = "My beanstalk application"
+  description = "Default route for my realization of rds"
+  default = "./modules/rds"
 }
 
-variable eb-env-name {
+variable "vpc_address" {
   type = string
-  description = "Name of AWS EB environment"
+  description = "Default route for my realization of vpc"
+  default = "./modules/vpc"
 }
-
-variable eb-env-solution-stack-name {
-  type         = string
-  description   = "Solution stack for EB"
-}
-
-variable "tier" {
-  type = string
-}
- 
-//variable "vpc_id" {}
-/*variable "public_subnets" {}
-variable "elb_public_subnets" {}*/
